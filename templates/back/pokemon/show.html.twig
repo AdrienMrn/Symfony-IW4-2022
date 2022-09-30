@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokedex - {{ pokemon.name }}{% endblock %}
+
+{% block body %}
+    <a href="{{ path('back_pokemon_index') }}">Retour au pokedex</a> <br><br>
+    {{ pokemon.name }} -
+{% endblock %}

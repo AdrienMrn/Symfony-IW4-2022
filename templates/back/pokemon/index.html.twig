@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokedex{% endblock %}
+
+{% block body %}
+    {% for pokemon in pokemons %}
+        {{ pokemon.name }} -
+        <a href="{{ path('back_pokemon_show', {'id': pokemon.id}) }}">Voir</a>
+        <a href="{{ path('back_pokemon_update', {'id': pokemon.id}) }}">Modifier</a>
+        <a href="{{ path('back_pokemon_remove', {'id': pokemon.id, 'token': csrf_token('remove' ~ pokemon.id)}) }}">Supprimer</a> <br>
+    {% endfor %}
+{% endblock %}
