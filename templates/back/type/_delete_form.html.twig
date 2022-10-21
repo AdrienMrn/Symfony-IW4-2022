@@ -2,3 +2,8 @@
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ type.id) }}">
     <button class="btn">Delete</button>
 </form>
+
+{% embed 'back/_embed/_modal.html.twig' %}
+    {% block header %}test{% endblock %}
+    {% block main %}testmain{% endblock %}
+{% endembed %}

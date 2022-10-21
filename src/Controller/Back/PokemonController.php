@@ -46,7 +46,8 @@ class PokemonController extends AbstractController
     public function show(Pokemon $pokemon): Response
     {
         return $this->render('back/pokemon/show.html.twig', [
-            'pokemon' => $pokemon
+            'pokemon' => $pokemon,
+            'text' => 'test <br> test2 <script>alert()</script>'
         ]);
     }
 
