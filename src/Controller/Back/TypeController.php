@@ -5,6 +5,7 @@ namespace App\Controller\Back;
 use App\Entity\Type;
 use App\Form\TypeType;
 use App\Repository\TypeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,8 +18,17 @@ class TypeController extends AbstractController
     public function index(TypeRepository $typeRepository): Response
     {
         return $this->render('back/type/index.html.twig', [
-            'types' => $typeRepository->findAll(),
+            'types' => $typeRepository->findBy([], ['position' => 'ASC']),
         ]);
+    }
+
+    #[Route('/{id}/{sortable}', name: 'app_type_sortable', requirements: ['id' => '\d+', 'sortable' => 'UP|DOWN'], methods: ['GET'])]
+    public function sortable(Type $type, string $sortable, EntityManagerInterface $manager): Response
+    {
+        $sortable === 'UP' ? $type->setPosition($type->getPosition() -1) : $type->setPosition($type->getPosition() +1);
+        $manager->flush();
+
+        return $this->redirectToRoute('back_app_type_index');
     }
 
     #[Route('/new', name: 'app_type_new', methods: ['GET', 'POST'])]

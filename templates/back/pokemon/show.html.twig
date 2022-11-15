@@ -5,5 +5,11 @@
 {% block body %}
     <a href="{{ path('back_pokemon_index') }}">Retour au pokedex</a> <br><br>
 
-    {{ pokemon.name }} -
+    {{ pokemon.name }} <br>
+    <br>
+    {% if pokemon.updatedBy and pokemon.updatedAt %}
+    Modifié par {{ pokemon.updatedBy.email }} le {{ pokemon.updatedAt|date('d/m/Y') }}
+    {% endif %}
+    <br>
+    <img src="{{ vich_uploader_asset(pokemon, 'imageFile') }}" alt="{{ pokemon.name }}">
 {% endblock %}

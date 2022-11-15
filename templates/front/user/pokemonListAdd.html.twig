@@ -1,0 +1,12 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Liste de mes pokemons{% endblock %}
+
+{% block body %}
+    <h1>Ajout d'un pokemon à ma liste</h1>
+
+    {{ form_start(form) }}
+    {{ form_rest(form) }}
+    <input type="submit" value="Enregistrer">
+    {{ form_end(form) }}
+{% endblock %}

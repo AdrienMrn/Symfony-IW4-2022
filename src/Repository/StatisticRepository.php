@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Statistic;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,8 +22,9 @@ class StatisticRepository extends ServiceEntityRepository
         parent::__construct($registry, Statistic::class);
     }
 
-    public function save(Statistic $entity, bool $flush = false): void
+    public function save(Statistic $entity, User $user, bool $flush = false): void
     {
+        $entity->setOwner($user);
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {

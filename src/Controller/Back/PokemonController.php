@@ -42,7 +42,7 @@ class PokemonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'show', requirements: ['id' => '\d'], methods: ['GET'])]
+    #[Route('/{id}', name: 'show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(Pokemon $pokemon): Response
     {
         return $this->render('back/pokemon/show.html.twig', [
@@ -51,7 +51,7 @@ class PokemonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/update', name: 'update', requirements: ['id' => '\d'], methods: ['GET', 'POST'])]
+    #[Route('/{id}/update', name: 'update', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function update(Pokemon $pokemon, Request $request, ManagerRegistry $managerRegistry): Response
     {
         $form = $this->createForm(PokemonType::class, $pokemon);
@@ -70,7 +70,7 @@ class PokemonController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/remove/{token}', name: 'remove', requirements: ['id' => '\d'], methods: ['GET'])]
+    #[Route('/{id}/remove/{token}', name: 'remove', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function remove(Pokemon $pokemon, string $token, PokemonRepository $pokemonRepository): Response
     {
         if (!$this->isCsrfTokenValid('remove' . $pokemon->getId(), $token)) {

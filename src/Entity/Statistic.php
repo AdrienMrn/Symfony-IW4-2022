@@ -29,6 +29,9 @@ class Statistic
     #[ORM\JoinColumn(nullable: false)]
     private ?Pokemon $pokemon = null;
 
+    #[ORM\ManyToOne(inversedBy: 'pokemons')]
+    private ?User $owner = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Statistic
     public function setPokemon(?Pokemon $pokemon): self
     {
         $this->pokemon = $pokemon;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }
