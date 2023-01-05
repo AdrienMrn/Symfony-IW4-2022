@@ -3,6 +3,24 @@
 {% block title %}Pokedex{% endblock %}
 
 {% block body %}
+    <form method="POST">
+        <input type="text" value="{{ app.request.request.get('search') }}" name="search" placeholder="Recherche">
+        <select name="nature" id="">
+            <option value="">Nature</option>
+            {% for nature in natures %}
+                <option value="{{nature.id}}"{% if app.request.request.get('nature') == nature.id %} selected{% endif %}>{{nature.name}}</option>
+            {% endfor %}
+        </select>
+        <select name="limit">
+            <option value="10"{% if app.request.request.get('limit') == 10 %} selected{% endif %}>10</option>
+            <option value="20"{% if app.request.request.get('limit') == 20 %} selected{% endif %}>20</option>
+            <option value="30"{% if app.request.request.get('limit') == 30 %} selected{% endif %}>30</option>
+            <option value="40"{% if app.request.request.get('limit') == 40 %} selected{% endif %}>40</option>
+            <option value="50"{% if app.request.request.get('limit') == 50 %} selected{% endif %}>50</option>
+        </select>
+        <button type="submit">Recherche</button>
+    </form>
+
     {% for pokemon in pokemons %}
         {{ pokemon.name|capitalize }} -
 

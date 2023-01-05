@@ -4,7 +4,9 @@ namespace App\Controller\Back;
 
 use App\Entity\Pokemon;
 use App\Form\PokemonType;
+use App\Repository\NatureRepository;
 use App\Repository\PokemonRepository;
+use App\Repository\TypeRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/pokedex', name: 'pokemon_')]
 class PokemonController extends AbstractController
 {
-    #[Route('/', name: 'index', methods: ['GET'])]
-    public function index(PokemonRepository $pokemonRepository): Response
+    #[Route('/', name: 'index', methods: ['GET', 'POST'])]
+    public function index(PokemonRepository $pokemonRepository, NatureRepository $natureRepository, Request $request): Response
     {
         return $this->render('back/pokemon/index.html.twig', [
-            'pokemons' => $pokemonRepository->findAll()
+            'natures' => $natureRepository->findAll(),
+            'pokemons' => $pokemonRepository->search($request)
         ]);
     }
 

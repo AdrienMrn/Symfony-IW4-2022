@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Pokemon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @extends ServiceEntityRepository<Pokemon>
@@ -39,20 +40,32 @@ class PokemonRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Pokemon[] Returns an array of Pokemon objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Pokemon[] Returns an array of Pokemon objects
+     */
+    public function search(Request $request): array
+    {
+        $queryResult =  $this->createQueryBuilder('p')
+            ->orderBy('p.name', 'ASC')
+            ->setMaxResults($request->request->get('limit', 10))
+        ;
+
+        if ($query = $request->request->get('search')) {
+            $queryResult
+                ->andWhere('p.name LIKE :val')
+                ->setParameter('val', '%' . $query . '%')
+            ;
+        }
+
+        if ($nature = $request->request->get('nature')) {
+            $queryResult
+                ->andWhere('p.nature = :nature')
+                ->setParameter('nature', $nature)
+            ;
+        }
+
+        return $queryResult->getQuery()->getResult();
+    }
 
 //    public function findOneBySomeField($value): ?Pokemon
 //    {
