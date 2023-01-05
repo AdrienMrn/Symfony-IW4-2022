@@ -29,6 +29,8 @@ RUN apk add --no-cache \
 		file \
 		gettext \
 		git \
+        linux-headers \
+        npm \
 	;
 
 RUN set -eux; \
@@ -117,6 +119,8 @@ RUN set -eux; \
 		composer run-script --no-dev post-install-cmd; \
 		chmod +x bin/console; sync; \
     fi
+
+RUN apk add --update --no-cache npm
 
 # Dev image
 FROM app_php AS app_php_dev
